@@ -1,0 +1,7 @@
+---
+  - name: Add the PPA for Ruby NG
+    apt_repository: repo="ppa:brightbox/ruby-ng"
+
+  - name: Install Ruby NG
+    apt: pkg="{{item}}" update_cache=yes
+    with_items: "{{ruby_ng_packages}}"

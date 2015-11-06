@@ -3,4 +3,5 @@
   sudo: yes
 
   roles:
+    - { role: ruby-ng, ruby_ng_packages: ["ruby2.1", "ruby2.1-dev"] }
     - { role: passenger-nginx }
