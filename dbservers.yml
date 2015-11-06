@@ -4,4 +4,3 @@
 
   roles:
     - { role: mysql-server }
-    - { role: mysql-createdb, db_name: renovar, db_user: renovar, db_password: renovar }
