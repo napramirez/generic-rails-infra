@@ -1,0 +1,27 @@
+---
+  - name: Install the Phusion Passenger PGP key
+    shell: "gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7 && touch .passenger_pgp_key"
+    args:
+      creates: ".passenger_pgp_key"
+
+  - name: Install HTTPS support in Apt
+    apt: pkg="{{item}}"
+    with_items:
+      - apt-transport-https
+      - ca-certificates
+
+  - name: Add the Phusion Passenger OSS Apt repository
+    apt_repository:
+      repo: "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main"
+      update_cache: yes
+
+  - name: Install Phusion Passenger + Nginx
+    apt: pkg="{{item}}" force=yes update_cache=yes
+    with_items:
+      - nginx-extras
+      - passenger
+
+  - name: Configure Passenger to use ruby
+    shell: 'echo "Blaaaaaaaah"'
+    notify:
+      - Restart Nginx

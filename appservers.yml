@@ -1,0 +1,6 @@
+---
+- hosts: appservers
+  sudo: yes
+
+  roles:
+    - { role: passenger-nginx }
