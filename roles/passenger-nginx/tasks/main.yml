@@ -21,7 +21,14 @@
       - nginx-extras
       - passenger
 
-  - name: Configure Passenger to use ruby
-    shell: 'echo "Blaaaaaaaah"'
+  - name: Configure Nginx to use the default Passenger options
+    lineinfile:
+      dest:     "/etc/nginx/nginx.conf"
+      regexp:   "^(\\s*)# {{item}}(.*)"
+      line:     "\\1{{item}}\\2"
+      backrefs: true
+    with_items:
+      - passenger_root
+      - passenger_ruby
     notify:
       - Restart Nginx

@@ -1,6 +1,3 @@
 ---
-  - name: Restart Nginxsu
-    service: name=nginx state=restarted
-
   - name: Restart Nginx
-    shell: 'echo "Graaaaaaaaaawr"'
+    service: name=nginx state=restarted
