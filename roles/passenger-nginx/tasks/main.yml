@@ -13,7 +13,6 @@
   - name: Add the Phusion Passenger OSS Apt repository
     apt_repository:
       repo: "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main"
-      update_cache: yes
 
   - name: Install Phusion Passenger + Nginx
     apt: pkg="{{item}}" force=yes update_cache=yes
