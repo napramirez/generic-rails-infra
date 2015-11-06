@@ -1,0 +1,16 @@
+---
+  - name: Create the database
+    mysql_db:
+      name:   "{{db_name}}"
+      state:  present
+
+  - name: Create the database user
+    mysql_user:
+      name:     "{{db_user}}"
+      password: "{{db_password}}"
+      host:     "{{item.host}}"
+      priv:     "{{db_name}}.*:ALL"
+      state:    present
+    with_items:
+      - { host: "%" }
+      - { host: "localhost" }
