@@ -20,6 +20,12 @@
       - nginx-full
       - passenger
 
+  - name: Expose $PATH to Nginx to be able to access curl or wget
+    lineinfile:
+      dest:         "/etc/nginx/nginx.conf"
+      insertbefore: "^http.*"
+      line:         "env PATH;"
+
   - name: Configure Nginx to use the default Passenger options
     lineinfile:
       dest:     "/etc/nginx/nginx.conf"
