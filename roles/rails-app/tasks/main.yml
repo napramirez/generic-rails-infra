@@ -23,16 +23,18 @@
     become_user: www-data
 
   - name: Run the Rails application's 'bundle install'
-    shell: 'cd "{{app_root_path}}" && bundle exec bundle install -j3 --path=vendor/bundle && touch .bundle_install'
+    shell: 'bundle exec bundle install -j3 --path=vendor/bundle && touch .bundle_install'
     args:
+      chdir:   "{{app_root_path}}"
       creates: "{{app_root_path}}/.bundle_install"
     environment:
       RAILS_ENV: production
     become_user: www-data
 
   - name: Run the Rails application's 'rake assets:precompile'
-    shell: 'cd "{{app_root_path}}" && bundle exec rake assets:precompile && touch .assets_precompile'
+    shell: 'bundle exec rake assets:precompile && touch .assets_precompile'
     args:
+      chdir:   "{{app_root_path}}"
       creates: "{{app_root_path}}/.assets_precompile"
     environment:
       RAILS_ENV: production
