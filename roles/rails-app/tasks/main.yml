@@ -23,7 +23,7 @@
     become_user: www-data
 
   - name: Run the Rails application's 'bundle install'
-    shell: 'bundle exec bundle install -j3 --path=vendor/bundle && touch .bundle_install'
+    shell: 'bundle install -j3 --path=vendor/bundle && touch .bundle_install'
     args:
       chdir:   "{{app_root_path}}"
       creates: "{{app_root_path}}/.bundle_install"
