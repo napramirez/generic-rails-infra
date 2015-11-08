@@ -1,0 +1,4 @@
+---
+  native_deps: []
+
+  app_root_path: /var/www/rails-app

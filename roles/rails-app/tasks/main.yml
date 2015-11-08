@@ -1,0 +1,51 @@
+---
+  - name: Install prerequisite applications
+    apt:  pkg="{{item}}"
+    with_items:
+      - git
+
+  - name: Install the Rails application's native dependencies
+    apt:  pkg="{{item}}"
+    with_items: "{{native_deps}}"
+
+  - name: Install bundler
+    gem:  name=bundler user_install=no
+
+  - name: Create the application root directory
+    file:
+      path:  "{{app_root_path}}"
+      state: directory
+      owner: www-data
+      group: www-data
+
+  - name: Clone the Rails application repository
+    git:  repo="{{git_repo}}" dest="{{app_root_path}}"
+    become_user: www-data
+
+  - name: Run the Rails application's 'bundle install'
+    shell: 'cd "{{app_root_path}}" && bundle exec bundle install -j3 --path=vendor/bundle && touch .bundle_install'
+    args:
+      creates: "{{app_root_path}}/.bundle_install"
+    environment:
+      RAILS_ENV: production
+    become_user: www-data
+
+  - name: Run the Rails application's 'rake assets:precompile'
+    shell: 'cd "{{app_root_path}}" && bundle exec rake assets:precompile && touch .assets_precompile'
+    args:
+      creates: "{{app_root_path}}/.assets_precompile"
+    environment:
+      RAILS_ENV: production
+    become_user: www-data
+
+  - name: Disable the default Nginx context
+    file:
+      path:  /etc/nginx/sites-enabled/default
+      state: absent
+
+  - name: Copy the Nginx server block configuration of the Rails application
+    copy:
+      src: nginx_server_block.conf
+      dest: /etc/nginx/sites-enabled/rails_app
+    notify:
+      - Restart Nginx
