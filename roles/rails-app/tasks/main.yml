@@ -19,7 +19,7 @@
       group: www-data
 
   - name: Clone the Rails application repository
-    git:  repo="{{git_repo}}" dest="{{app_root_path}}"
+    git:  repo="{{git_repo}}" dest="{{app_root_path}}" version="{{git_branch}}"
     become_user: www-data
 
   - name: Run the Rails application's 'bundle install'
