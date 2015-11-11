@@ -40,6 +40,15 @@
       RAILS_ENV: production
     become_user: www-data
 
+  - name: Run the Rails application's 'rake db:setup'
+    shell: 'bundle exec rake db:setup && touch .db_setup'
+    args:
+      chdir:   "{{app_root_path}}"
+      creates: "{{app_root_path}}/.db_setup"
+    environment:
+      RAILS_ENV: production
+    become_user: www-data
+
   - name: Disable the default Nginx context
     file:
       path:  /etc/nginx/sites-enabled/default
