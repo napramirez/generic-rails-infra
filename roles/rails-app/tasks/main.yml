@@ -21,6 +21,7 @@
   - name: Clone the Rails application repository
     git:  repo="{{git_repo}}" dest="{{app_root_path}}" version="{{git_branch}}"
     become_user: www-data
+    register: gitclone
 
   - name: Run the Rails application's 'bundle install'
     shell: 'bundle install -j3 --path=vendor/bundle && touch .bundle_install'
@@ -30,6 +31,7 @@
     environment:
       RAILS_ENV: production
     become_user: www-data
+    when: gitclone.changed
 
   - name: Run the Rails application's 'rake assets:precompile'
     shell: 'bundle exec rake assets:precompile && touch .assets_precompile'
@@ -39,6 +41,7 @@
     environment:
       RAILS_ENV: production
     become_user: www-data
+    when: gitclone.changed
 
   - name: Run the Rails application's 'rake db:setup'
     shell: 'bundle exec rake db:setup && touch .db_setup'
@@ -48,6 +51,7 @@
     environment:
       RAILS_ENV: production
     become_user: www-data
+    when: gitclone.changed
 
   - name: Disable the default Nginx context
     file:
