@@ -1,0 +1,10 @@
+---
+  - name: Install Nginx
+    apt: pkg=nginx-full
+
+  - name: Configure the load balancer settings from the template
+    template:
+      src:  rails_app_lb.j2
+      dest: /etc/nginx/conf.d/rails_app_lb.conf
+    notify:
+      - Restart Nginx
