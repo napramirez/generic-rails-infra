@@ -41,8 +41,8 @@
     become_user: www-data
     when: gitclone.changed
 
-  - name: Run the Rails application's 'rake db:setup'
-    shell: 'bundle exec rake db:setup'
+  - name: Run the Rails application's 'rake db:reset'
+    shell: 'bundle exec rake db:reset'
     args:
       chdir:   "{{app_root_path}}"
     environment:
