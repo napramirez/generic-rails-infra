@@ -2,6 +2,11 @@
   - name: Install Nginx
     apt: pkg=nginx-full
 
+  - name: Disable the default Nginx context
+    file:
+      path:  /etc/nginx/sites-enabled/default
+      state: absent
+
   - name: Configure the load balancer settings from the template
     template:
       src:  rails_app_lb.j2
