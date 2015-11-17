@@ -48,6 +48,7 @@
     environment:
       RAILS_ENV: production
     become_user: www-data
+    run_once: true
     when: gitclone.changed
 
   - name: Disable the default Nginx context
