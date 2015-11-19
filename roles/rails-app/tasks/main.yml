@@ -31,6 +31,8 @@
       RAILS_ENV: production
     become_user: www-data
     when: gitclone.changed
+    notify:
+      - Restart Nginx
 
   - name: Run the Rails application's 'rake assets:precompile'
     shell: 'bundle exec rake assets:precompile'
@@ -40,6 +42,8 @@
       RAILS_ENV: production
     become_user: www-data
     when: gitclone.changed
+    notify:
+      - Restart Nginx
 
   - name: Run the Rails application's 'rake db:reset'
     shell: 'bundle exec rake db:reset'
