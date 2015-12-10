@@ -2,3 +2,4 @@
 - include: appservers.yml
 - include: dbservers.yml
 - include: webservers.yml
+- include: monitors.yml

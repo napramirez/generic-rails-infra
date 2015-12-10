@@ -1,0 +1,18 @@
+---
+  - name: Monitor the webservers
+    hosts: webservers
+    sudo: yes
+    roles:
+      - { role: monit, monit_processes: ["nginx"] }
+
+  - name: Monitor the appservers
+    hosts: appservers
+    sudo: yes
+    roles:
+      - { role: monit, monit_processes: ["nginx", "passenger"] }
+
+  - name: Monitor the dbservers
+    hosts: dbservers
+    sudo: yes
+    roles:
+      - { role: monit, monit_processes: ["mysql"] }
