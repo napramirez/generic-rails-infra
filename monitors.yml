@@ -1,4 +1,11 @@
 ---
+  - name: Setup the monitoring server
+    hosts: monitors
+    sudo: yes
+    roles:
+      - { role: mmonit }
+      - { role: monit, monit_processes: ["mmonit"] }
+
   - name: Monitor the webservers
     hosts: webservers
     sudo: yes

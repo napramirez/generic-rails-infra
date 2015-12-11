@@ -4,3 +4,9 @@
   nginx_port: 80
 
   mysql_port: 3306
+
+  mmonit_username: admin
+
+  mmonit_password: swordfish
+
+  mmonit_port: 8080

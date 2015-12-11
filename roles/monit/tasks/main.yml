@@ -16,3 +16,11 @@
     with_items: "{{monit_processes}}"
     notify:
       - Restart Monit
+
+  - name: Configure Monit to report to M/Monit
+    template:
+      src:  mmonit_collector.j2
+      dest: /etc/monit/conf.d/mmonit_collector
+    notify:
+      - Restart Monit
+    when: groups["monitors"] | length | int == 1
