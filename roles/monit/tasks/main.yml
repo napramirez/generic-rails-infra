@@ -23,4 +23,4 @@
       dest: /etc/monit/conf.d/mmonit_collector
     notify:
       - Restart Monit
-    when: groups["monitors"] | length | int == 1
+    when: mmonit_hostname is defined

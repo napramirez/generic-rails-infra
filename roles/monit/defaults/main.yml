@@ -9,4 +9,6 @@
 
   mmonit_password: swordfish
 
+  mmonit_hostname: '{{groups["monitors"][0]}}'
+
   mmonit_port: 8080
